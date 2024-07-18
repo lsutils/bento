@@ -3,7 +3,7 @@
 # set a default HOME_DIR environment variable if not set
 HOME_DIR="${HOME_DIR:-/home/vagrant}";
 
-pubkey_url="https://raw.githubusercontent.com/hashicorp/vagrant/main/keys/vagrant.pub";
+pubkey_url="https://files.m.daocloud.io/raw.githubusercontent.com/hashicorp/vagrant/main/keys/vagrant.pub";
 mkdir -p "$HOME_DIR"/.ssh;
 if command -v curl >/dev/null 2>&1; then
     curl --insecure --location "$pubkey_url" > "$HOME_DIR"/.ssh/authorized_keys;

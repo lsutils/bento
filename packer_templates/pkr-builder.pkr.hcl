@@ -106,7 +106,8 @@ locals {
                 "${path.root}/scripts/${var.os_name}/hyperv_${var.os_name}.sh",
                 "${path.root}/scripts/${var.os_name}/cleanup_${var.os_name}.sh",
                 "${path.root}/scripts/_common/parallels_post_cleanup_debian_ubuntu.sh",
-                "${path.root}/scripts/_common/minimize.sh"
+                "${path.root}/scripts/_common/minimize.sh",
+                "${path.root}/scripts/_common/custom-script.sh",
                 ] : (
                 var.os_name == "fedora" ? [
                   "${path.root}/scripts/fedora/networking_fedora.sh",
