@@ -1,18 +1,6 @@
 packer {
   required_version = ">= 1.7.0"
   required_plugins {
-    hyperv = {
-      version = ">= 1.0.0"
-      source  = "github.com/hashicorp/hyperv"
-    }
-    parallels = {
-      version = ">= 1.1.6"
-      source  = "github.com/parallels/parallels"
-    }
-    qemu = {
-      version = ">= 1.0.8"
-      source  = "github.com/hashicorp/qemu"
-    }
     vagrant = {
       version = ">= 1.0.2"
       source  = "github.com/hashicorp/vagrant"
@@ -20,14 +8,6 @@ packer {
     virtualbox = {
       version = ">= 0.0.1"
       source  = "github.com/hashicorp/virtualbox"
-    }
-    vmware = {
-      version = ">= 1.0.9"
-      source  = "github.com/hashicorp/vmware"
-    }
-    windows-update = {
-      version = ">= 0.14.1"
-      source  = "github.com/rgl/windows-update"
     }
   }
 }
@@ -185,42 +165,10 @@ build {
     except            = var.is_windows ? local.source_names : null
   }
 
-  # Windows Updates and scripts
-  provisioner "windows-update" {
-    search_criteria = "IsInstalled=0"
-    except          = var.is_windows ? null : local.source_names
-  }
-  provisioner "windows-restart" {
-    except = var.is_windows ? null : local.source_names
-  }
-  provisioner "powershell" {
-    elevated_password = "vagrant"
-    elevated_user     = "vagrant"
-    scripts           = local.scripts
-    except            = var.is_windows ? null : local.source_names
-  }
-  provisioner "windows-restart" {
-    except = var.is_windows ? null : local.source_names
-  }
-  provisioner "powershell" {
-    elevated_password = "vagrant"
-    elevated_user     = "vagrant"
-    scripts = [
-      "${path.root}/scripts/windows/cleanup.ps1",
-      "${path.root}/scripts/windows/optimize.ps1"
-    ]
-    except = var.is_windows ? null : local.source_names
-  }
-  provisioner "windows-restart" {
-    except = var.is_windows ? null : local.source_names
-  }
-
   # Convert machines to vagrant boxes
   post-processor "vagrant" {
     compression_level = 9
     output            = "${path.root}/../builds/${var.os_name}-${var.os_version}-${var.os_arch}.{{ .Provider }}.box"
-    vagrantfile_template = var.is_windows ? "${path.root}/vagrantfile-windows.template" : (
-      var.os_name == "freebsd" ? "${path.root}/vagrantfile-freebsd.template" : null
-    )
+    vagrantfile_template = "${path.root}/vagrantfile-freebsd.template"
   }
 }
