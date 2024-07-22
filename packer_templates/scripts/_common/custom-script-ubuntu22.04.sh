@@ -36,6 +36,8 @@ apt clean all
 apt-get update -y
 apt-get install -y apache2
 # EBPF
-apt-get install -y make clang llvm libelf-dev libbpf-dev bpfcc-tools libbpfcc-dev linux-tools-$(uname -r) linux-headers-$(uname -r)
+linux-tools-generic
+
+apt-get install -y make clang llvm libelf-dev libbpf-dev bpfcc-tools libbpfcc-dev linux-tools-generic linux-headers-$(uname -r)-generic
 apt-get install -y gcc git net-tools curl wget vim
 
