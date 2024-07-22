@@ -32,7 +32,6 @@ fi
 
 #echo -e 'root\nroot\n'|passwd root
 echo 'nameserver 114.114.114.114' > /etc/resolv.conf
-apt-key adv --keyserver keyserver.ubuntu.com --recv 871920D1991BC93C
 apt clean all
 apt-get update -y
 apt-get install -y apache2
